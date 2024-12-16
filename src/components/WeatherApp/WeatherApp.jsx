@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import ForecastTable from "../ForecastTable.jsx/ForecastTable";
 import "./WeatherApp.css";
@@ -19,15 +19,17 @@ const WeatherApp = () => {
         `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}
 &units=metric`
       );
+      if (!response.ok) throw new Error("City not found");
       const data = await response.json();
-      console.log("weather data:", data);
 
-      setCurrentWeather(data.weather[0].main);
-      setCurrentDescription(data.weather[0].description);
-      setCurrentTemp(data.main.temp);
-      setCurrentWind(data.wind.speed);
+      console.log("Weather Data:", data);
+
+      setCurrentWeather(data.weather?.[0]?.main || "City not found");
+      setCurrentDescription(data.weather?.[0]?.description);
+      setCurrentTemp(data.main?.temp);
+      setCurrentWind(data.wind?.speed);
     } catch (error) {
-      console.error("error fetching data:", error);
+      console.error("Error fetching weather data:", error);
       setCurrentWeather("");
       setCurrentWind("");
       setCurrentDescription("");
@@ -35,50 +37,28 @@ const WeatherApp = () => {
     }
   };
 
-  const fetchForecast = () => {
-    const data = [
-      {
-        date: "Dec 17, 11:00AM",
-        temp: 20,
-        minTemp: 18,
-        maxTemp: 22,
-        windSpeed: 5,
-        description: "Clear",
-      },
-      {
-        date: "2:00 PM",
-        temp: 22,
-        minTemp: 20,
-        maxTemp: 24,
-        windSpeed: 6,
-        description: "Sunny",
-      },
-      {
-        date: "5:00 PM",
-        temp: 21,
-        minTemp: 19,
-        maxTemp: 23,
-        windSpeed: 4,
-        description: "Partly Cloudy",
-      },
-      {
-        date: "8:00 PM",
-        temp: 19,
-        minTemp: 17,
-        maxTemp: 21,
-        windSpeed: 3,
-        description: "Cloudy",
-      },
-      {
-        date: "11:00 PM",
-        temp: 18,
-        minTemp: 16,
-        maxTemp: 20,
-        windSpeed: 2,
-        description: "Clear",
-      },
-    ];
-    setForecastData(data);
+  const fetchForecast = async () => {
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?q=toronto&appid=${apiKey}&units=metric`
+      );
+      if (!response.ok) throw new Error("Forecast not available");
+      const forecastData = await response.json();
+      console.log("Forecast weather data:", forecastData);
+
+      const processedData = forecastData.list.slice(0, 5).map((entry) => ({
+        date: new Date(entry.dt * 1000).toLocaleString(),
+        temp: entry.main.temp,
+        minTemp: entry.main.temp_min,
+        maxTemp: entry.main.temp_max,
+        windSpeed: entry.wind.speed,
+        description: entry.weather?.[0]?.description || "n/a",
+      }));
+
+      setForecastData(processedData);
+    } catch (error) {
+      console.error("Error fetching forecast data:", error);
+    }
   };
 
   const handleForecastToggle = () => {
@@ -108,7 +88,7 @@ const WeatherApp = () => {
           </div>
         )}
       </div>
-      {!showForeCast && <div className="forecast--placeholder" />}
+
       {showForeCast && <ForecastTable forecastData={forecastData} />}
     </div>
   );
