@@ -3,6 +3,15 @@ h3 {
   margin-bottom: 0;
 }
 
+.weather--app--container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+}
+
 .weather--description,
 .wind--speed {
   display: block;
@@ -11,6 +20,11 @@ h3 {
   color: var(--text-muted);
 }
 
+.current--weather {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .search--grid {
   display: flex;
   flex-direction: column;
@@ -18,17 +32,7 @@ h3 {
   gap: 1rem;
 }
 .button {
-  margin-top: 1 rem;
-}
-
-.weather--app {
-  margin-bottom: 2rem;
-}
-
-.current--weather {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  margin-top: 1rem;
 }
 
 table {
@@ -50,4 +54,10 @@ th {
 
 tr:nth-child(even) {
   background-color: #6b6666;
+}
+
+.forecast--placeholder {
+  width: 100%;
+  height: auto;
+  visibility: hidden;
 }

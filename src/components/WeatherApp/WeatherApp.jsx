@@ -89,7 +89,7 @@ const WeatherApp = () => {
   };
 
   return (
-    <div className="weather--app">
+    <div className="weather--app--container">
       <h1>Weather Forecast</h1>
       <div className="search--grid">
         <SearchBar handleSearch={handleSearch} />
@@ -108,6 +108,7 @@ const WeatherApp = () => {
           </div>
         )}
       </div>
+      {!showForeCast && <div className="forecast--placeholder" />}
       {showForeCast && <ForecastTable forecastData={forecastData} />}
     </div>
   );
