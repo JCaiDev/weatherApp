@@ -1,0 +1,53 @@
+h3 {
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+.weather--description,
+.wind--speed {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.search--grid {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.button {
+  margin-top: 1 rem;
+}
+
+.weather--app {
+  margin-bottom: 2rem;
+}
+
+.current--weather {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #000000;
+}
+
+tr:nth-child(even) {
+  background-color: #6b6666;
+}
