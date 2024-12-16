@@ -1,6 +1,6 @@
 # Build with React + Vite
 
 # Set Up
--npm install 
--require API key from https://openweathermap.org/
+**npm install** 
+**obtain API key from https://openweathermap.org/**
 
