@@ -40,7 +40,7 @@ const WeatherApp = () => {
   const fetchForecast = async () => {
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?q=toronto&appid=${apiKey}&units=metric`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=${apiKey}&units=metric`
       );
       if (!response.ok) throw new Error("Forecast not available");
       const forecastData = await response.json();
