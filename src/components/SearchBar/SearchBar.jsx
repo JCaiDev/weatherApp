@@ -11,10 +11,13 @@ const SearchBar = ({ handleSearch }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submit clicked with query", query);
-    if (query) {
+
+    const trimQuery = query.trim();
+    if (trimQuery) {
       handleSearch(query);
     }
   };
+
   return (
     <>
       <div className="search--bar">
@@ -30,11 +33,10 @@ const SearchBar = ({ handleSearch }) => {
             Search
           </button>
         </form>
-        {
-          <p className="input--message">
-            Please select city to see the forecast
-          </p>
-        }
+
+        <p className="input--message">
+          Please enter a city to see the forecast
+        </p>
       </div>
     </>
   );

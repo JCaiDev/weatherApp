@@ -10,10 +10,12 @@ const WeatherApp = () => {
   const [currentTemp, setCurrentTemp] = useState("");
   const [forecastData, setForecastData] = useState([]);
   const [showForeCast, setShowForecast] = useState(false);
+  const [query, setQuery] = useState("");
 
   const apiKey = import.meta.env.VITE_API_KEY;
-  /* replace apiKey = 1e14a28a455e16d03e606f712d1ed019 */
+
   const handleSearch = async (query) => {
+    console.log("received query, query");
     try {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}
@@ -26,8 +28,8 @@ const WeatherApp = () => {
 
       setCurrentWeather(data.weather?.[0]?.main || "City not found");
       setCurrentDescription(data.weather?.[0]?.description);
-      setCurrentTemp(data.main?.temp);
-      setCurrentWind(data.wind?.speed);
+      setCurrentTemp(Math.round(data.main?.temp));
+      setCurrentWind(Math.round(data.wind?.speed));
     } catch (error) {
       console.error("Error fetching weather data:", error);
       setCurrentWeather("");
@@ -44,6 +46,7 @@ const WeatherApp = () => {
       );
       if (!response.ok) throw new Error("Forecast not available");
       const forecastData = await response.json();
+
       console.log("Forecast weather data:", forecastData);
 
       const processedData = forecastData.list.slice(0, 5).map((entry) => ({
@@ -62,7 +65,7 @@ const WeatherApp = () => {
   };
 
   const handleForecastToggle = () => {
-    if (!showForeCast) {
+    if (!showForeCast && query) {
       fetchForecast();
     }
     setShowForecast(!showForeCast);
@@ -89,7 +92,12 @@ const WeatherApp = () => {
         )}
       </div>
 
-      {showForeCast && <ForecastTable forecastData={forecastData} />}
+      {showForeCast &&
+        (forecastData.length > 0 ? (
+          <ForecastTable forecastData={forecastData} />
+        ) : (
+          <p>No forecast data available. Please try another city.</p>
+        ))}
     </div>
   );
 };
