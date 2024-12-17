@@ -4,6 +4,7 @@ import "./ForecastTable.css";
 
 const ForecastTable = ({ forecastData }) => {
   const formatDate = (dateString) => {
+    if (!dateString) return "Invalid Date";
     const date = new Date(dateString);
 
     const dateOptions = {
@@ -55,17 +56,9 @@ const ForecastTable = ({ forecastData }) => {
   );
   const data = React.useMemo(
     () => (Array.isArray(forecastData) ? forecastData : []),
-    // (Array.isArray(forecastData) || []).map((forecast, index) => ({
-    //   date: forecast.date || "n/a",
-    //   temp: forecast.temp ?? "n/a",
-    //   minTemp: forecast.minTemp ?? "n/a",
-    //   maxTemp: forecast.maxTemp ?? "n/a",
-    //   windSpeed: forecast.windSpeed ?? "n/a",
-    //   description: forecast.description ?? "n/a",
-    //   rowIndex: index,
-    // })),
     [forecastData]
   );
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
   return (

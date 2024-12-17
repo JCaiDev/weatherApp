@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import ForecastTable from "../ForecastTable.jsx/ForecastTable";
 import "./WeatherApp.css";
@@ -11,11 +11,21 @@ const WeatherApp = () => {
   const [forecastData, setForecastData] = useState([]);
   const [showForeCast, setShowForecast] = useState(false);
   const [query, setQuery] = useState("");
+  // const [selectedDayIndex, setSelectDayIndex] = useState(0);
 
   const apiKey = import.meta.env.VITE_API_KEY;
 
   const handleSearch = async (query) => {
-    console.log("received query, query");
+    setQuery(query);
+    setForecastData([]);
+    try {
+      fetchCurrentWeather(query);
+    } catch (error) {
+      console.error("error fetching current weather data:", error);
+    }
+  };
+
+  const fetchCurrentWeather = async (query) => {
     try {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}
@@ -24,22 +34,25 @@ const WeatherApp = () => {
       if (!response.ok) throw new Error("City not found");
       const data = await response.json();
 
-      console.log("Weather Data:", data);
+      console.log("Current weather data:", data);
 
       setCurrentWeather(data.weather?.[0]?.main || "City not found");
       setCurrentDescription(data.weather?.[0]?.description);
       setCurrentTemp(Math.round(data.main?.temp));
       setCurrentWind(Math.round(data.wind?.speed));
     } catch (error) {
-      console.error("Error fetching weather data:", error);
+      console.error("Error fetching current weather data:", error);
       setCurrentWeather("");
       setCurrentWind("");
       setCurrentDescription("");
       setCurrentTemp("");
     }
+    fetchForecast(query);
   };
 
-  const fetchForecast = async () => {
+  const fetchForecast = async (query) => {
+    console.log("fetching forecast for city:", query);
+
     try {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=${apiKey}&units=metric`
@@ -65,11 +78,20 @@ const WeatherApp = () => {
   };
 
   const handleForecastToggle = () => {
-    if (!showForeCast && query) {
-      fetchForecast();
-    }
+    console.log("see forecast button clicked");
+    console.log("query value:", query);
     setShowForecast(!showForeCast);
   };
+
+  // const handleDayChange = (index) => {
+  //   setSelectDayIndex(index);
+  // };
+
+  useEffect(() => {
+    if (query) {
+      fetchForecast(query);
+    }
+  }, [query]);
 
   return (
     <div className="weather--app--container">
@@ -94,7 +116,17 @@ const WeatherApp = () => {
 
       {showForeCast &&
         (forecastData.length > 0 ? (
-          <ForecastTable forecastData={forecastData} />
+          <div>
+            <ForecastTable forecastData={forecastData} />
+            {/* <div>
+              {forecastData.map((_, index) => (
+                <button key={index} onClick={() => handleDayChange(index)}>
+                  {" "}
+                  Day {index + 1}
+                </button>
+              ))}
+            </div> */}
+          </div>
         ) : (
           <p>No forecast data available. Please try another city.</p>
         ))}

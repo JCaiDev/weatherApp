@@ -2,19 +2,19 @@ import { useState } from "react";
 import "./SearchBar.css";
 
 const SearchBar = ({ handleSearch }) => {
-  const [query, setQuery] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e) => {
-    setQuery(e.target.value);
+    setInputValue(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submit clicked with query", query);
+    console.log("Submit clicked with query", inputValue);
 
-    const trimQuery = query.trim();
+    const trimQuery = inputValue.trim();
     if (trimQuery) {
-      handleSearch(query);
+      handleSearch(inputValue);
     }
   };
 
@@ -26,7 +26,7 @@ const SearchBar = ({ handleSearch }) => {
             type="text"
             className="search--input"
             placeholder="City"
-            value={query}
+            value={inputValue}
             onChange={handleInputChange}
           />
           <button type="submit" className="search--button">
