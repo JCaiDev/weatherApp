@@ -62,14 +62,22 @@ const WeatherApp = () => {
 
       console.log("Forecast weather data:", forecastData);
 
-      const processedData = forecastData.list.slice(0, 5).map((entry) => ({
-        date: new Date(entry.dt * 1000).toLocaleString(),
-        temp: entry.main.temp,
-        minTemp: entry.main.temp_min,
-        maxTemp: entry.main.temp_max,
-        windSpeed: entry.wind.speed,
-        description: entry.weather?.[0]?.description || "n/a",
-      }));
+      const processedData = forecastData.list
+        .filter((entry) => {
+          const entryDate = new Date(entry.dt_txt.split(" ")[0]);
+          const currentDate = new Date();
+          const todayDate = currentDate.toISOString().split("T")[0];
+
+          return entryDate.toISOString().split("T")[0] === todayDate;
+        })
+        .map((entry) => ({
+          date: new Date(entry.dt * 1000).toLocaleString(),
+          temp: entry.main.temp,
+          minTemp: entry.main.temp_min,
+          maxTemp: entry.main.temp_max,
+          windSpeed: entry.wind.speed,
+          description: entry.weather?.[0]?.description || "n/a",
+        }));
 
       setForecastData(processedData);
     } catch (error) {
