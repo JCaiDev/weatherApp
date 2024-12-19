@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar/SearchBar";
-import ForecastTable from "../ForecastTable.jsx/ForecastTable";
+import ForecastTable from "../ForecastTable/ForecastTable";
 import "./WeatherApp.css";
+import { format } from "date-fns";
 
 const WeatherApp = () => {
   const [currentWeather, setCurrentWeather] = useState("");
@@ -11,7 +12,9 @@ const WeatherApp = () => {
   const [forecastData, setForecastData] = useState([]);
   const [showForeCast, setShowForecast] = useState(false);
   const [query, setQuery] = useState("");
-  // const [selectedDayIndex, setSelectDayIndex] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [baseDate, setBaseDate] = useState(new Date());
+  const [timezoneOffSet, setTimezoneOffSet] = useState(0);
 
   const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -52,6 +55,7 @@ const WeatherApp = () => {
 
   const fetchForecast = async (query) => {
     console.log("fetching forecast for city:", query);
+    if (!query) return;
 
     try {
       const response = await fetch(
@@ -62,44 +66,57 @@ const WeatherApp = () => {
 
       console.log("Forecast weather data:", forecastData);
 
-      const processedData = forecastData.list
-        .filter((entry) => {
-          const entryDate = new Date(entry.dt_txt.split(" ")[0]);
-          const currentDate = new Date();
-          const todayDate = currentDate.toISOString().split("T")[0];
+      // Adjust for local timezone
+      const timezoneOffset = forecastData.city?.timezone || 0;
+      setTimezoneOffSet(timezoneOffset);
 
-          return entryDate.toISOString().split("T")[0] === todayDate;
-        })
-        .map((entry) => ({
-          date: new Date(entry.dt * 1000).toLocaleString(),
+      const processedData = forecastData.list.map((entry) => {
+        // UTC to local time
+        const dateTime = new Date(entry.dt * 1000);
+        dateTime.setSeconds(dateTime.getSeconds() + timezoneOffSet);
+
+        const localDate = format(dateTime, "yyyy-MM-dd");
+
+        return {
+          localDateTime: dateTime,
+          localDate,
+          date: format(dateTime, "MMM dd, HH:mm"),
           temp: entry.main.temp,
           minTemp: entry.main.temp_min,
           maxTemp: entry.main.temp_max,
           windSpeed: entry.wind.speed,
           description: entry.weather?.[0]?.description || "n/a",
-        }));
+        };
+      });
 
-      setForecastData(processedData);
+      const selectedLocalDate = format(selectedDate, "yyyy-MM-dd");
+
+      const filteredData = processedData.filter(
+        (entry) => entry.localDate === selectedLocalDate
+      );
+
+      console.log("filtered forecast data:", filteredData);
+
+      setForecastData(filteredData);
     } catch (error) {
       console.error("Error fetching forecast data:", error);
     }
   };
 
   const handleForecastToggle = () => {
-    console.log("see forecast button clicked");
     console.log("query value:", query);
     setShowForecast(!showForeCast);
   };
 
-  // const handleDayChange = (index) => {
-  //   setSelectDayIndex(index);
-  // };
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate);
+  };
 
   useEffect(() => {
     if (query) {
       fetchForecast(query);
     }
-  }, [query]);
+  }, [selectedDate, query]);
 
   return (
     <div className="weather--app--container">
@@ -122,22 +139,37 @@ const WeatherApp = () => {
         )}
       </div>
 
-      {showForeCast &&
-        (forecastData.length > 0 ? (
-          <div>
-            <ForecastTable forecastData={forecastData} />
-            {/* <div>
-              {forecastData.map((_, index) => (
-                <button key={index} onClick={() => handleDayChange(index)}>
-                  {" "}
-                  Day {index + 1}
-                </button>
-              ))}
-            </div> */}
+      {showForeCast && (
+        <div className="forecast--container">
+          <ForecastTable forecastData={forecastData} />
+
+          <div className="forecast--date--buttons">
+            {Array(6)
+              .fill(null)
+              .map((_, index) => {
+                const buttonDate = new Date(
+                  baseDate.getTime() + index * 86400000 + timezoneOffSet
+                );
+
+                const formattedDate = format(buttonDate, "MMM dd");
+
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleDateChange(buttonDate)}
+                    className={
+                      buttonDate.toDateString() === selectedDate.toDateString()
+                        ? "active"
+                        : ""
+                    }
+                  >
+                    {formattedDate}
+                  </button>
+                );
+              })}
           </div>
-        ) : (
-          <p>No forecast data available. Please try another city.</p>
-        ))}
+        </div>
+      )}
     </div>
   );
 };
