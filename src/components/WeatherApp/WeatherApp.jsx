@@ -13,14 +13,16 @@ const WeatherApp = () => {
   const [showForeCast, setShowForecast] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [baseDate, setBaseDate] = useState(new Date());
+  const baseDate = new Date();
   const [timezoneOffSet, setTimezoneOffSet] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const apiKey = import.meta.env.VITE_API_KEY;
 
   const handleSearch = async (query) => {
     setQuery(query);
     setForecastData([]);
+    setErrorMessage("");
     try {
       fetchCurrentWeather(query);
     } catch (error) {
@@ -49,6 +51,7 @@ const WeatherApp = () => {
       setCurrentWind("");
       setCurrentDescription("");
       setCurrentTemp("");
+      setErrorMessage("City not found.");
     }
     fetchForecast(query);
   };
@@ -100,6 +103,7 @@ const WeatherApp = () => {
       setForecastData(filteredData);
     } catch (error) {
       console.error("Error fetching forecast data:", error);
+      setErrorMessage("Forecast not available.");
     }
   };
 
@@ -122,7 +126,7 @@ const WeatherApp = () => {
     <div className="weather--app--container">
       <h1>Weather Forecast</h1>
       <div className="search--grid">
-        <SearchBar handleSearch={handleSearch} />
+        <SearchBar handleSearch={handleSearch} errorMessage={errorMessage} />
 
         {currentWeather && (
           <div className="current--weather">

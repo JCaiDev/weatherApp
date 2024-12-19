@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./SearchBar.css";
 
-const SearchBar = ({ handleSearch }) => {
+const SearchBar = ({ handleSearch, errorMessage }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e) => {
@@ -33,6 +33,7 @@ const SearchBar = ({ handleSearch }) => {
             Search
           </button>
         </form>
+        {errorMessage && <p className="error--message">{errorMessage}</p>}
 
         <p className="input--message">
           Please enter a city to see the forecast

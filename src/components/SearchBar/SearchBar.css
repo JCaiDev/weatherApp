@@ -46,3 +46,9 @@ form {
   color: var(--text-muted);
   align-self: flex-start;
 }
+
+.error--message {
+  color: red;
+  margin: 0;
+  padding: 0;
+}
