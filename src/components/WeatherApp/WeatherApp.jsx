@@ -118,14 +118,6 @@ const WeatherApp = () => {
         (forecastData.length > 0 ? (
           <div>
             <ForecastTable forecastData={forecastData} />
-            {/* <div>
-              {forecastData.map((_, index) => (
-                <button key={index} onClick={() => handleDayChange(index)}>
-                  {" "}
-                  Day {index + 1}
-                </button>
-              ))}
-            </div> */}
           </div>
         ) : (
           <p>No forecast data available. Please try another city.</p>
