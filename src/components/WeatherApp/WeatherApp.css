@@ -34,3 +34,28 @@ h3 {
 .button {
   margin-top: 1rem;
 }
+
+.forecast--date-buttons {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.forecast--date-buttons button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.forecast--date-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.forecast--date-buttons button.active {
+  background-color: #28a745;
+  color: #fff;
+}

@@ -14,7 +14,7 @@ const ForecastTable = ({ forecastData }) => {
       minute: "numeric",
       hour12: true,
     };
-    const formattedDate = new Intl.DateTimeFormat("en-GB", dateOptions).format(
+    const formattedDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
       date
     );
     return formattedDate.replace(",", "");
@@ -64,10 +64,13 @@ const ForecastTable = ({ forecastData }) => {
   return (
     <table {...getTableProps()}>
       <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()} key={column.id}>
+        {headerGroups.map((headerGroup, index) => (
+          <tr
+            {...headerGroup.getHeaderGroupProps()}
+            key={`headerGroup-${index}`}
+          >
+            {headerGroup.headers.map((column, columnIndex) => (
+              <th {...column.getHeaderProps()} key={`header-${columnIndex}`}>
                 {column.render("Header")}
               </th>
             ))}
@@ -75,13 +78,16 @@ const ForecastTable = ({ forecastData }) => {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
+        {rows.map((row, rowIndex) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()} key={row.id}>
-              {row.cells.map((cell) => {
+            <tr {...row.getRowProps()} key={`row-${rowIndex}`}>
+              {row.cells.map((cell, cellIndex) => {
                 return (
-                  <td {...cell.getCellProps()} key={cell.column.id}>
+                  <td
+                    {...cell.getCellProps()}
+                    key={`cell-${rowIndex}-${cellIndex}`}
+                  >
                     {cell.render("Cell")}
                   </td>
                 );
