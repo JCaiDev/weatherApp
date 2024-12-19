@@ -13,10 +13,10 @@ const WeatherApp = () => {
   const [showForeCast, setShowForecast] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const baseDate = new Date();
   const [timezoneOffSet, setTimezoneOffSet] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const baseDate = new Date();
   const apiKey = import.meta.env.VITE_API_KEY;
 
   const handleSearch = async (query) => {
@@ -103,7 +103,6 @@ const WeatherApp = () => {
       setForecastData(filteredData);
     } catch (error) {
       console.error("Error fetching forecast data:", error);
-      setErrorMessage("Forecast not available.");
     }
   };
 
