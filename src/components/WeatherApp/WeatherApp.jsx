@@ -167,7 +167,7 @@ const WeatherApp = () => {
                   </button>
                 );
               })}
-
+          </div>
         </div>
       )}
     </div>
