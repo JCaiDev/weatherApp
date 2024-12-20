@@ -1,20 +1,31 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th,
-td {
-  padding: 8px;
-  text-align: left;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  margin-top: 5%;
+  background-color: var(--background-dark);
 }
 
 th {
+  padding: 5px;
+  text-align: left;
+  border: 1px solid var(--background-light);
   background-color: rgba(0, 0, 0, 0.8);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+td {
+  padding: 5px;
+  text-align: left;
+  border: 1px solid var(--background-light);
 }
 
 tr:nth-child(even) {
-  background-color: rgb(119, 112, 112);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+tr:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: background-color 0.3s ease;
 }

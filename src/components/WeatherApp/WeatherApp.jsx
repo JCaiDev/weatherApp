@@ -135,7 +135,10 @@ const WeatherApp = () => {
             <h3>{currentTemp} °C</h3>
             <span className="wind--speed">wind speed: {currentWind} m/sec</span>
             <br />
-            <button onClick={handleForecastToggle}>
+            <button
+              className="showForecast--button"
+              onClick={handleForecastToggle}
+            >
               {showForeCast ? "Close Forecast" : "See Forecast"}
             </button>
           </div>

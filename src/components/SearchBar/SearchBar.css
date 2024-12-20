@@ -10,10 +10,19 @@
   height: 25px;
   width: 200px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--background-light);
   padding: 0 10px;
   font-size: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-dark);
+  color: var(--text-primary);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search--input:focus {
+  border-color: var(--text-muted);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+  outline: none;
 }
 
 .search--button {
@@ -21,23 +30,25 @@
   width: 80px;
   margin-left: 10px;
   border-radius: 5px;
-  border: 1px solid #dedfec;
+  border: 1px solid var(--background-light);
   font-size: 16px;
-  color: var(--text-muted);
+  color: var(--text-primary);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--background-dark);
 }
 
 .search--button:hover {
-  background-color: #969ae2;
+  background-color: var(--button-hover);
 }
 
 form {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .input--message {
@@ -48,8 +59,9 @@ form {
 }
 
 .error--message {
-  color: rgb(202, 73, 73);
-  margin: 0;
-  padding: 0;
+  color: var(--text-warning);
   font-weight: 500;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  padding: 0 5px;
 }

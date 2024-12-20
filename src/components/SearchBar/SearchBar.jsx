@@ -10,11 +10,10 @@ const SearchBar = ({ handleSearch, errorMessage }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submit clicked with query", inputValue);
 
-    const trimQuery = inputValue.trim();
+    const trimQuery = inputValue.trim().replace(/\s+/g, " ");
     if (trimQuery) {
-      handleSearch(inputValue);
+      handleSearch(trimQuery);
     }
   };
 
