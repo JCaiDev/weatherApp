@@ -1,23 +1,12 @@
 import React from "react";
 import { useTable } from "react-table";
+import { formatDate } from "../../utils/format.jsx";
 import "./ForecastTable.css";
 
 const ForecastTable = ({ forecastData }) => {
-  const formatDate = (dateString) => {
+  const formatForecastDate = (dateString) => {
     if (!dateString) return "Invalid Date";
-    const date = new Date(dateString);
-
-    const dateOptions = {
-      day: "2-digit",
-      month: "short",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    };
-    const formattedDate = new Intl.DateTimeFormat("en-US", dateOptions).format(
-      date
-    );
-    return formattedDate.replace(",", "");
+    return formatDate(dateString);
   };
 
   const columns = React.useMemo(
@@ -25,7 +14,7 @@ const ForecastTable = ({ forecastData }) => {
       {
         Header: "Date",
         accessor: "date",
-        Cell: ({ value }) => formatDate(value),
+        Cell: ({ value }) => formatForecastDate(value),
       },
       {
         Header: "Temp (°C)",

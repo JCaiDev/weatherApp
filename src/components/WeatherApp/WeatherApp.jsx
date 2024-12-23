@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import ForecastTable from "../ForecastTable/ForecastTable";
+import { fetchCurrentWeather, fetchForecastData } from "../../utils/api";
+import { formatDate, getLocalDate, getformattedDate } from "../../utils/format";
 import "./WeatherApp.css";
-import { format } from "date-fns";
+import { format, formatDistance } from "date-fns";
 
 const WeatherApp = () => {
   const [currentWeather, setCurrentWeather] = useState("");
@@ -24,66 +26,38 @@ const WeatherApp = () => {
     setForecastData([]);
     setErrorMessage("");
     try {
-      fetchCurrentWeather(query);
+      const weatherData = await fetchCurrentWeather(query, apiKey);
+
+      setCurrentWeather(weatherData.weather?.[0]?.main || "City not found");
+      setCurrentDescription(weatherData.weather?.[0]?.description);
+      setCurrentTemp(Math.round(weatherData.main?.temp));
+      setCurrentWind(Math.round(weatherData.wind?.speed));
+      fetchForecast(query);
     } catch (error) {
-      console.error("error fetching current weather data:", error);
-    }
-  };
-
-  const fetchCurrentWeather = async (query) => {
-    try {
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}
-&units=metric`
-      );
-      if (!response.ok) throw new Error("City not found");
-      const data = await response.json();
-
-      console.log("Current weather data:", data);
-
-      setCurrentWeather(data.weather?.[0]?.main || "City not found");
-      setCurrentDescription(data.weather?.[0]?.description);
-      setCurrentTemp(Math.round(data.main?.temp));
-      setCurrentWind(Math.round(data.wind?.speed));
-    } catch (error) {
-      console.error("Error fetching current weather data:", error);
       setCurrentWeather("");
       setCurrentWind("");
       setCurrentDescription("");
       setCurrentTemp("");
       setErrorMessage("City not found.");
     }
-    fetchForecast(query);
   };
 
   const fetchForecast = async (query) => {
-    console.log("fetching forecast for city:", query);
     if (!query) return;
-
     try {
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=${apiKey}&units=metric`
-      );
-      if (!response.ok) throw new Error("Forecast not available");
-      const forecastData = await response.json();
+      const forecastData = await fetchForecastData(query, apiKey);
 
-      console.log("Forecast weather data:", forecastData);
+      console.log("forecast Data: ", forecastData);
 
-      // Adjust for local timezone
       const timezoneOffset = forecastData.city?.timezone || 0;
-      setTimezoneOffSet(timezoneOffset);
+      setTimezoneOffSet(timezoneOffSet);
 
       const processedData = forecastData.list.map((entry) => {
-        // UTC to local time
-        const dateTime = new Date(entry.dt * 1000);
-        dateTime.setSeconds(dateTime.getSeconds() + timezoneOffSet);
-
-        const localDate = format(dateTime, "yyyy-MM-dd");
-
+        const localDate = getLocalDate(entry, timezoneOffSet);
         return {
-          localDateTime: dateTime,
+          localDateTime: new Date(entry.dt * 1000),
           localDate,
-          date: format(dateTime, "MMM dd, HH:mm"),
+          date: formatDate(new Date(entry.dt * 1000)),
           temp: entry.main.temp,
           minTemp: entry.main.temp_min,
           maxTemp: entry.main.temp_max,
@@ -92,22 +66,18 @@ const WeatherApp = () => {
         };
       });
 
-      const selectedLocalDate = format(selectedDate, "yyyy-MM-dd");
-
+      const selectedLocalDate = formatDate(selectedDate, "yyyy-MM-dd");
       const filteredData = processedData.filter(
         (entry) => entry.localDate === selectedLocalDate
       );
 
-      console.log("filtered forecast data:", filteredData);
-
       setForecastData(filteredData);
     } catch (error) {
-      console.error("Error fetching forecast data:", error);
+      console.error("error fetching forecast data: ", error);
     }
   };
 
   const handleForecastToggle = () => {
-    console.log("query value:", query);
     setShowForecast(!showForeCast);
   };
 
@@ -157,7 +127,7 @@ const WeatherApp = () => {
                   baseDate.getTime() + index * 86400000 + timezoneOffSet
                 );
 
-                const formattedDate = format(buttonDate, "MMM dd");
+                const formattedDate = getformattedDate(buttonDate);
 
                 return (
                   <button
