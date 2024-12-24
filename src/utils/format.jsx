@@ -1,5 +1,4 @@
-import { format, isValid, addDays, getSeconds } from "date-fns";
-import { getTimezoneOffset } from "date-fns-tz";
+import { format, isValid, addDays } from "date-fns";
 
 export const formatDate = (date, dateFormat = "MMM dd, HH:mm") => {
   if (!date) return "Invalid Date";
@@ -10,9 +9,9 @@ export const formatDate = (date, dateFormat = "MMM dd, HH:mm") => {
 
 export const addDaysToDate = (date, days) => addDays(date, days);
 
-export const getLocalDate = (entry, timezoneOffset) => {
+export const getLocalDate = (entry) => {
   const dateTime = new Date(entry.dt * 1000);
-  dateTime.setSeconds(dateTime.getSeconds() + timezoneOffset);
+  dateTime.setSeconds(dateTime.getSeconds());
   return format(dateTime, "yyyy-MM-dd");
 };
 
