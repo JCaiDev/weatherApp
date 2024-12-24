@@ -6,6 +6,7 @@
   color-scheme: light dark;
 
   --text-primary: rgba(255, 255, 255, 0.9);
+  --text-secondary: rgb(90, 86, 86);
   --text-muted: rgba(255, 255, 255, 0.678);
   --text-warning: rgba(163, 39, 39, 1);
   --background-light: #ffffff;

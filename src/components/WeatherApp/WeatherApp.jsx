@@ -4,7 +4,6 @@ import ForecastTable from "../ForecastTable/ForecastTable";
 import { fetchCurrentWeather, fetchForecastData } from "../../utils/api";
 import { formatDate, getLocalDate, getformattedDate } from "../../utils/format";
 import "./WeatherApp.css";
-import { format, formatDistance } from "date-fns";
 
 const WeatherApp = () => {
   const [currentWeather, setCurrentWeather] = useState("");
@@ -47,13 +46,12 @@ const WeatherApp = () => {
     try {
       const forecastData = await fetchForecastData(query, apiKey);
 
-      console.log("forecast Data: ", forecastData);
-
-      const timezoneOffset = forecastData.city?.timezone || 0;
+      const timezoneOffSet = forecastData.city?.timezone || 0;
       setTimezoneOffSet(timezoneOffSet);
 
       const processedData = forecastData.list.map((entry) => {
-        const localDate = getLocalDate(entry, timezoneOffSet);
+        const localDate = getLocalDate(entry);
+
         return {
           localDateTime: new Date(entry.dt * 1000),
           localDate,
@@ -66,7 +64,10 @@ const WeatherApp = () => {
         };
       });
 
-      const selectedLocalDate = formatDate(selectedDate, "yyyy-MM-dd");
+      const selectedLocalDate = formatDate(
+        selectedDate.getTime() + timezoneOffSet * 1000,
+        "yyyy-MM-dd"
+      );
       const filteredData = processedData.filter(
         (entry) => entry.localDate === selectedLocalDate
       );
@@ -124,7 +125,7 @@ const WeatherApp = () => {
               .fill(null)
               .map((_, index) => {
                 const buttonDate = new Date(
-                  baseDate.getTime() + index * 86400000 + timezoneOffSet
+                  baseDate.getTime() + index * 86400000 + timezoneOffSet * 1000
                 );
 
                 const formattedDate = getformattedDate(buttonDate);

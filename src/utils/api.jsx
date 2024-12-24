@@ -21,3 +21,33 @@ export const fetchForecastData = async (query, apiKey) => {
     throw new Error("Error fetching forecast data: " + error.message);
   }
 };
+
+export const fetchCitySuggestions = async (query) => {
+  if (!query || query.length < 2) {
+    return { list: [] };
+  }
+
+  try {
+    const apiKey = import.meta.env.VITE_API_KEY;
+    const response = await fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch city suggestions");
+    }
+    const data = await response.json();
+    return {
+      list:
+        data.map((city) => ({
+          name: `${city.name}, ${city.country}`,
+          lat: city.lat,
+          long: city.lon,
+          countryCode: city.country,
+        })) || [],
+    };
+  } catch (error) {
+    console.error("Error fetching city suggestions: ", error);
+    return { list: [] };
+  }
+};
