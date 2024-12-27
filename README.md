@@ -67,6 +67,7 @@ with actual API key
 
 ## Future Improvements
 
-- Improve the user interface with animations and better styling
-- Fahrenheit and Celcius toggle
-- Light/Dark Theme
+- Enhanced User Interface: Add animations and a more visually appealing design.
+- Temperature Unit Toggle: The ability to switch between Fahrenheit and Celsius.
+- Light/Dark Theme: A light and dark theme option.
+- Accessibility: ensure accessibility for all users, utilizing aria-label attributes.
