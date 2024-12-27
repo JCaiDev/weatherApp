@@ -19,7 +19,6 @@ const SearchBar = ({ handleSearch, errorMessage }) => {
 
         const options = [...new Set(data.list.map((city) => city.name))];
 
-        console.log(options);
         setCityOptions(options);
         setShowSuggestions(true);
       } catch (error) {
