@@ -17,7 +17,9 @@ const SearchBar = ({ handleSearch, errorMessage }) => {
       try {
         const data = await fetchCitySuggestions(query);
 
-        const options = data.list.map((city) => city.name);
+        const options = [...new Set(data.list.map((city) => city.name))];
+
+        console.log(options);
         setCityOptions(options);
         setShowSuggestions(true);
       } catch (error) {
