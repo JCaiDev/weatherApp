@@ -24,7 +24,7 @@ To run the app locally, follow these steps:
 ### Prerequisites
 
 - Node.js
-- npm (Node Package Manager).
+- npm (Node Package Manager)
 
 ### Installation
 
@@ -56,7 +56,7 @@ This will start a local development server and open the app in your browser at h
 
 ## API Usage
 
-The app uses the OpenWeather API to fetch weather data. Create an account on OpenWeather and obtain an API key.
+The app uses the OpenWeather API to fetch weather data. Create an account on OpenWeather and obtain an API key
 
 1. Go to [OpenWeather](https://openweathermap.org) and sign up
 2. Sign up and get your free API key
@@ -67,7 +67,7 @@ with actual API key
 
 ## Future Improvements
 
-- Enhanced User Interface: Add animations and a more visually appealing design.
-- Temperature Unit Toggle: The ability to switch between Fahrenheit and Celsius.
-- Light/Dark Theme: A light and dark theme option.
-- Accessibility: ensure accessibility for all users, utilizing aria-label attributes.
+- Enhanced User Interface: Add animations and a more visually appealing design
+- Temperature Unit Toggle: The ability to switch between Fahrenheit and Celsius
+- Light/Dark Theme: A light and dark theme option
+- Accessibility: Utilize aria-label attributes to ensure accessibility for all users
