@@ -37,15 +37,19 @@ export const fetchCitySuggestions = async (query) => {
       throw new Error("Failed to fetch city suggestions");
     }
     const data = await response.json();
-    return {
-      list:
-        data.map((city) => ({
-          name: `${city.name}, ${city.country}`,
-          lat: city.lat,
-          long: city.lon,
-          countryCode: city.country,
-        })) || [],
-    };
+
+    if (!Array.isArray(data)) {
+      throw new Error("Unexpected API response structure");
+    }
+
+    const validatedData = data.map((city) => ({
+      name: `${city.name}, ${city.country}` || "",
+      lat: city.lat || 0,
+      long: city.lon || 0,
+      countryCode: city.country || "",
+    }));
+
+    return { list: validatedData };
   } catch (error) {
     console.error("Error fetching city suggestions: ", error);
     return { list: [] };
