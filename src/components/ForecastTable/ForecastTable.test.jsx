@@ -10,8 +10,9 @@ describe("formatForecastDate", () => {
   test('returns "Invalid Date" for an invalid dateString', () => {
     const input = "invalid-date";
     const result = formatForecastDate(input);
-    expected(result).toBe("Invalid Date");
+    expect(result).toBe("Invalid Date");
   });
+
   test('returns "Invalid Date" for empty input', () => {
     const input = "";
     const result = formatForecastDate(input);
