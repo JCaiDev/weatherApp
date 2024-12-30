@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { describe, expect, test } from "vitest";
 import ForecastTable from "./ForecastTable";
 
 describe("ForecastTable", () => {
@@ -13,11 +14,16 @@ describe("ForecastTable", () => {
     },
   ];
 
+  test("returns 'Invalid Date' for empty input", () => {
+    render(<ForecastTable forecastData={[]} />);
+
+    expect(screen.getByText(/No data available/i)).toBeInTheDocument();
+  });
+
   test("renders the forecast table and formats date correctly", () => {
     render(<ForecastTable forecastData={forecastData} />);
 
     expect(screen.getByText("Dec 29, 21:00")).toBeInTheDocument();
-
     expect(screen.getByText("15 °C")).toBeInTheDocument();
     expect(screen.getByText("12 °C")).toBeInTheDocument();
     expect(screen.getByText("18 °C")).toBeInTheDocument();

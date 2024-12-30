@@ -67,9 +67,9 @@ with actual API key
 
 ## Unit Testing
 
-This project includes unit tests written with Vitest. The tests ensure the core functionalities of the app work as expected.
+This project includes unit tests written with Vitest and React Testing Library. The tests ensure the core functionalities of the app work as expected.
 
-## Running Tests
+### Running Tests
 
 To execute the unit tests:
 
@@ -79,11 +79,11 @@ npm run test
 
 This command uses the Vitest testing framework configured for the project.
 
-## Tests
+### Tests
 
 - Search Functionality: Verifies that entering a city name and clicking the search button fetches and displays weather data correctly
-- Forecast Display: Tests that the forecast data renders correctly
-- Weather Display: Renders the components and current weather data correctly
+- Weather Data Fetching: Tests that the app correctly fetches and displays the current weather data (weather description, temperature, wind speed)
+- Forecast Data Rendering: Ensures that the forecast data (date, temperature, min-max temperature, wind speed, weather description) for the 5-day forecast is rendered correctly
 
 ## Future Improvements
 
