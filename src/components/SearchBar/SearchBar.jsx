@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { fetchCitySuggestions } from "../../utils/api";
+import { debounce } from "lodash";
 import "./SearchBar.css";
 
 const SearchBar = ({ handleSearch, errorMessage }) => {
@@ -8,29 +9,36 @@ const SearchBar = ({ handleSearch, errorMessage }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const handleInputChange = async (e) => {
+  const debouncedFetchCitySuggestions = useCallback(
+    debounce(async (query) => {
+      if (query.length >= 2) {
+        setIsLoading(true);
+        try {
+          const data = await fetchCitySuggestions(query);
+
+          const options = [...new Set(data.list.map((city) => city.name))];
+
+          setCityOptions(options);
+          setShowSuggestions(true);
+        } catch (error) {
+          console.error("Error fetching city suggestions:", error);
+          setCityOptions([]);
+          setShowSuggestions(false);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setCityOptions([]);
+        setShowSuggestions(false);
+      }
+    }, 300),
+    []
+  );
+
+  const handleInputChange = (e) => {
     const query = e.target.value;
     setInputValue(query);
-
-    if (query.length >= 2) {
-      setIsLoading(true);
-      try {
-        const data = await fetchCitySuggestions(query);
-
-        const options = [...new Set(data.list.map((city) => city.name))];
-
-        setCityOptions(options);
-        setShowSuggestions(true);
-      } catch (error) {
-        console.error("Error fetching city suggestions: ", error);
-        setCityOptions([]);
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      setCityOptions([]);
-      setShowSuggestions(true);
-    }
+    debouncedFetchCitySuggestions(query);
   };
 
   const handleSuggestionClick = (city) => {
