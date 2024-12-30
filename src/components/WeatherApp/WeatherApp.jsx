@@ -26,7 +26,7 @@ const WeatherApp = () => {
     setErrorMessage("");
     try {
       const weatherData = await fetchCurrentWeather(query, apiKey);
-      console.log("weather data:", weatherData);
+
       setCurrentWeather(weatherData.weather?.[0]?.main || "City not found");
       setCurrentDescription(weatherData.weather?.[0]?.description);
       setCurrentTemp(Math.round(weatherData.main?.temp));
@@ -45,11 +45,10 @@ const WeatherApp = () => {
     if (!query) return;
     try {
       const forecastData = await fetchForecastData(query, apiKey);
-      console.log("forecast Data:", forecastData);
+
       const timezoneOffSet = forecastData.city?.timezone || 0;
       setTimezoneOffSet(timezoneOffSet);
 
-      console.log("timezone:", timezoneOffSet);
       const processedData = forecastData.list.map((entry) => {
         const localDate = getLocalDate(entry);
 

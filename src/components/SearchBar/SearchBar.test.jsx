@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SearchBar from "./SearchBar";
 import { describe } from "vitest";
 
@@ -41,5 +41,25 @@ describe("Searchbar Component", () => {
     fireEvent.change(input, { target: { value: "To" } });
 
     expect(await screen.findByText("Loading cities...")).toBeInTheDocument();
+  });
+
+  test("displays error message when city not found", async () => {
+    const fetchCitySuggestions = vi.fn().mockResolvedValue({
+      list: [],
+    });
+    render(
+      <SearchBar
+        handleSearch={mockHandleSearch}
+        errorMessage="City not found"
+        fetchCitySuggestions={fetchCitySuggestions}
+      />
+    );
+
+    const input = screen.getByPlaceholderText("City");
+    fireEvent.change(input, { target: { value: "NonexistentCity" } });
+
+    await waitFor(() =>
+      expect(screen.getByText(/City not found/i)).toBeInTheDocument()
+    );
   });
 });
