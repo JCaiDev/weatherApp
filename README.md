@@ -65,6 +65,26 @@ The app uses the OpenWeather API to fetch weather data. Create an account on Ope
 
 with actual API key
 
+## Unit Testing
+
+This project includes unit tests written with Vitest. The tests ensure the core functionalities of the app work as expected.
+
+## Running Tests
+
+To execute the unit tests:
+
+```bash
+npm run test
+```
+
+This command uses the Vitest testing framework configured for the project.
+
+## Tests
+
+- Search Functionality: Verifies that entering a city name and clicking the search button fetches and displays weather data correctly
+- Forecast Display: Tests that the forecast data renders correctly
+- Weather Display: Renders the components and current weather data correctly
+
 ## Future Improvements
 
 - Enhanced User Interface: Add animations and a more visually appealing design
