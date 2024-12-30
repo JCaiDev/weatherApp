@@ -1,4 +1,4 @@
-const apiKey = import.meta.env.VITE_API_KEY;
+export const apiKey = import.meta.env.VITE_API_KEY;
 
 export const fetchCurrentWeather = async (query, apiKey) => {
   try {
