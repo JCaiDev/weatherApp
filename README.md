@@ -31,7 +31,7 @@ To run the app locally, follow these steps:
 1. Clone the repository:
 
 ```
-git clone https://github.com/flufynarwhal/weatherApp
+git clone [https://github.com/flufynarwhal/weatherApp](https://github.com/JCaiDev/weatherApp.git)
 ```
 
 2. Navigate into the project directory:
