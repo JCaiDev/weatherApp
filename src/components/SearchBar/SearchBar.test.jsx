@@ -5,14 +5,14 @@ import { describe } from "vitest";
 describe("Searchbar Component", () => {
   const mockHandleSearch = vi.fn();
 
-  it("renders input and button", () => {
+  test("renders input and button", () => {
     render(<SearchBar handleSearch={mockHandleSearch} errorMessage="" />);
 
     expect(screen.getByPlaceholderText("City")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /search/i })).toBeInTheDocument();
   });
 
-  it("calls handleSearch with correct input value on form submission", () => {
+  test("calls handleSearch with correct input value on form submission", () => {
     render(<SearchBar handleSearch={mockHandleSearch} errorMessage="" />);
 
     const input = screen.getByPlaceholderText("City");
@@ -24,7 +24,7 @@ describe("Searchbar Component", () => {
     expect(mockHandleSearch).toHaveBeenCalledWith("Toronto");
   });
 
-  it("shows loading message when fetching city suggestions", async () => {
+  test("shows loading message when fetching city suggestions", async () => {
     const fetchCitySuggestions = vi.fn().mockResolvedValue({
       list: [{ name: "Toronto" }, { name: "Ottawa" }, { name: "Tokyo" }],
     });
