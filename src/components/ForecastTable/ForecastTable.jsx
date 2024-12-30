@@ -48,8 +48,12 @@ const ForecastTable = ({ forecastData }) => {
     [forecastData]
   );
 
+  if (data.length === 0) {
+    return <p>No Data Available</p>;
+  }
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
+
   return (
     <table {...getTableProps()}>
       <thead>
