@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import ForecastTable from "../ForecastTable/ForecastTable";
-import { fetchCurrentWeather, fetchForecastData } from "../../utils/api";
+import {
+  fetchCurrentWeather,
+  fetchForecastData,
+  apiKey,
+} from "../../utils/api";
 import { formatDate, getLocalDate, getformattedDate } from "../../utils/format";
 import "./WeatherApp.css";
 
@@ -18,7 +22,6 @@ const WeatherApp = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const baseDate = new Date();
-  const apiKey = import.meta.env.VITE_API_KEY;
 
   const handleSearch = async (query) => {
     setQuery(query);

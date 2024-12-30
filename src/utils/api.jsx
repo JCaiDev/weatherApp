@@ -1,3 +1,5 @@
+const apiKey = import.meta.env.VITE_API_KEY;
+
 export const fetchCurrentWeather = async (query, apiKey) => {
   try {
     const response = await fetch(
@@ -28,7 +30,6 @@ export const fetchCitySuggestions = async (query) => {
   }
 
   try {
-    const apiKey = import.meta.env.VITE_API_KEY;
     const response = await fetch(
       `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`
     );
