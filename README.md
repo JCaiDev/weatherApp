@@ -59,12 +59,16 @@ This will start a local development server and open the app in your browser at h
 The app uses the OpenWeather API to fetch weather data. Create an account on OpenWeather and obtain an API key
 
 1. Go to [OpenWeather](https://openweathermap.org) and sign up
-2. Sign up and get your free API key
-3. Replace the YOUR_API_KEY placeholder in the  
-   src/utils/api.jsx const apiKey = "YOUR_API_KEY"
-
-with actual API key
-
+2. Sign up and get a free API key
+3. Create a .env file in the root directory and add the following line replacing "API_KEY" with actual key:
+   ```makefile
+   VITE_API_KEY="API_KEY"
+   ```
+4. Alternatively, directly assign API key into the variable the apiKey   
+   src/utils/api.jsx
+   ```javascript
+   const apiKey = "API_KEY"
+   ```
 ## Unit Testing
 
 This project includes unit tests written with Vitest and React Testing Library. The tests ensure the core functionalities of the app work as expected.
