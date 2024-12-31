@@ -1,6 +1,6 @@
 # Jeffrey's WeatherApp
 
-[Check out the live app here](https://jeffreyweatherapp.netlify.app)
+[Check out the beta here](https://jeffreyweatherapp.netlify.app)
 
 A simple React-based weather application that allows users to search for weather information by city. The app fetches real-time weather data from the OpenWeather API and displays the current weather and an option for a 5-day forecast
 
