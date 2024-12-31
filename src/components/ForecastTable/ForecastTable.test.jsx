@@ -15,7 +15,7 @@ describe("ForecastTable", () => {
   ];
 
   test("returns 'Invalid Date' for empty input", () => {
-    render(<ForecastTable forecastData={[]} />);
+    render(<ForecastTable forecastData={null} />);
 
     expect(screen.getByText(/No data available/i)).toBeInTheDocument();
   });

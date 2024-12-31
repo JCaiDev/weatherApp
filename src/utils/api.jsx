@@ -1,14 +1,12 @@
-export const apiKey = import.meta.env.VITE_API_KEY;
-
 export const fetchCurrentWeather = async (query, apiKey) => {
   try {
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=metric`
     );
-    if (!response.ok) throw new Error("City not found");
+    if (!response.ok) throw new Error("City not found", response);
     return await response.json();
   } catch (error) {
-    throw new Error("Error fetching weather data: " + error.message);
+    console.error("Error fetching weather data: " + error.message);
   }
 };
 
@@ -20,7 +18,7 @@ export const fetchForecastData = async (query, apiKey) => {
     if (!response.ok) throw new Error("Forecast not available");
     return await response.json();
   } catch (error) {
-    throw new Error("Error fetching forecast data: " + error.message);
+    console.error("Error fetching forecast data: " + error.message);
   }
 };
 
@@ -30,6 +28,7 @@ export const fetchCitySuggestions = async (query) => {
   }
 
   try {
+    const apiKey = import.meta.env.VITE_API_KEY;
     const response = await fetch(
       `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`
     );
