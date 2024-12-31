@@ -72,7 +72,7 @@ const SearchBar = ({ handleSearch, errorMessage }) => {
         </button>
       </form>
 
-      {isLoading && <p>Loading cities...</p>}
+      {isLoading && <p className="loading--message">Loading cities...</p>}
 
       {showSuggestions && (
         <ul className="suggestion--list">

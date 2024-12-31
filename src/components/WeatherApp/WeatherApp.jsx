@@ -11,7 +11,7 @@ const WeatherApp = () => {
   const [currentWind, setCurrentWind] = useState("");
   const [currentTemp, setCurrentTemp] = useState("");
   const [forecastData, setForecastData] = useState([]);
-  const [showForeCast, setShowForecast] = useState(false);
+  const [showForecast, setShowForecast] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [timezoneOffSet, setTimezoneOffSet] = useState(0);
@@ -46,6 +46,8 @@ const WeatherApp = () => {
     try {
       const forecastData = await fetchForecastData(query, apiKey);
 
+      console.log("Forecast Data:", forecastData);
+
       const timezoneOffSet = forecastData.city?.timezone || 0;
       setTimezoneOffSet(timezoneOffSet);
 
@@ -79,7 +81,7 @@ const WeatherApp = () => {
   };
 
   const handleForecastToggle = () => {
-    setShowForecast(!showForeCast);
+    setShowForecast(!showForecast);
   };
 
   const handleDateChange = (newDate) => {
@@ -110,13 +112,13 @@ const WeatherApp = () => {
               className="showForecast--button"
               onClick={handleForecastToggle}
             >
-              {showForeCast ? "Close Forecast" : "See Forecast"}
+              {showForecast ? "Close Forecast" : "See Forecast"}
             </button>
           </div>
         )}
       </div>
 
-      {showForeCast && (
+      {showForecast && (
         <div className="forecast--container">
           <ForecastTable forecastData={forecastData} />
 
@@ -125,7 +127,7 @@ const WeatherApp = () => {
               .fill(null)
               .map((_, index) => {
                 const buttonDate = new Date(
-                  baseDate.getTime() + index * 86400000 + timezoneOffSet * 1000
+                  baseDate.getTime() + index * 86400000 //86400000 is ms in a day
                 );
 
                 const formattedDate = getformattedDate(buttonDate);

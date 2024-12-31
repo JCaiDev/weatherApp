@@ -3,10 +3,13 @@ export const fetchCurrentWeather = async (query, apiKey) => {
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=metric`
     );
-    if (!response.ok) throw new Error("City not found", response);
+    if (!response.ok)
+      throw new Error(
+        `Error fetching current weather data: ${response.statusText}`
+      );
     return await response.json();
   } catch (error) {
-    console.error("Error fetching weather data: " + error.message);
+    console.error("Error fetching current weather data: " + error.message);
   }
 };
 
@@ -15,7 +18,8 @@ export const fetchForecastData = async (query, apiKey) => {
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=${apiKey}&units=metric`
     );
-    if (!response.ok) throw new Error("Forecast not available");
+    if (!response.ok)
+      throw new Error(`Error fetching forecast data: ${response.statusText}`);
     return await response.json();
   } catch (error) {
     console.error("Error fetching forecast data: " + error.message);
@@ -34,7 +38,7 @@ export const fetchCitySuggestions = async (query) => {
     );
 
     if (!response.ok) {
-      throw new Error("Failed to fetch city suggestions");
+      throw new Error(`Error fetching city suggestion: ${response.statusText}`);
     }
     const data = await response.json();
 
