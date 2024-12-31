@@ -95,3 +95,5 @@ This command uses the Vitest testing framework configured for the project.
 - Temperature Unit Toggle: The ability to switch between Fahrenheit and Celsius
 - Light/Dark Theme: A light and dark theme option
 - Accessibility: Utilize aria-label attributes to ensure accessibility for all users
+- Internationlization: Improve App available in other languages
+- Improve Error handling: Categorize HTTPS error codes, implement sentry to log errors, datadog to visualize error trends
