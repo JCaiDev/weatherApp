@@ -46,6 +46,11 @@ const SearchBar = ({ handleSearch, errorMessage }) => {
     setShowSuggestions(false);
     handleSearch(city);
   };
+  const handleBlur = () => {
+    setTimeout(() => {
+      setShowSuggestions(false);
+    }, 300);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,6 +71,7 @@ const SearchBar = ({ handleSearch, errorMessage }) => {
           value={inputValue}
           onChange={handleInputChange}
           onFocus={() => setShowSuggestions(cityOptions.length > 0)}
+          onBlur={handleBlur}
         />
         <button type="submit" className="search--button">
           Search

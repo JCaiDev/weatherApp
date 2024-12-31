@@ -46,8 +46,6 @@ const WeatherApp = () => {
     try {
       const forecastData = await fetchForecastData(query, apiKey);
 
-      console.log("Forecast Data:", forecastData);
-
       const timezoneOffSet = forecastData.city?.timezone || 0;
       setTimezoneOffSet(timezoneOffSet);
 
