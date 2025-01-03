@@ -27,9 +27,9 @@ describe("Searchbar Component", () => {
   test("shows loading message when fetching city suggestions", async () => {
     const fetchCitySuggestions = vi.fn().mockResolvedValue({
       list: [
-        { name: "Toronto " },
-        { name: " Ottawa" },
-        { name: "New  York City" },
+        { name: "Toronto, CA" },
+        { name: "Toronto, US" },
+        { name: "Toronto, EU" },
       ],
     });
 
