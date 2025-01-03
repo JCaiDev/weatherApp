@@ -1,6 +1,6 @@
 # Jeffrey's WeatherApp
 
-[Check out the live app here](https://jeffreyweatherapp.netlify.app)
+[Check out the live version here](https://jeffreyweatherapp.netlify.app)
 
 A simple React-based weather application that allows users to search for weather information by city. The app fetches real-time weather data from the OpenWeather API and displays the current weather and an option for a 5-day forecast
 
@@ -64,11 +64,7 @@ The app uses the OpenWeather API to fetch weather data. Create an account on Ope
    ```makefile
    VITE_API_KEY="API_KEY"
    ```
-4. Alternatively, directly assign API key into the variable the apiKey   
-   src/utils/api.jsx
-   ```javascript
-   const apiKey = "API_KEY"
-   ```
+
 ## Unit Testing
 
 This project includes unit tests written with Vitest and React Testing Library. The tests ensure the core functionalities of the app work as expected.
