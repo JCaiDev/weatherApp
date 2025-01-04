@@ -18,10 +18,7 @@
   --link-color: #646cff;
   --link-hover: #646cff;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  
 
   background-color: var(--background-dark);
   color: var(--text-primary);
@@ -67,7 +64,4 @@ button:hover {
   border-color: var(--button-hover-border);
 }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+
