@@ -65,7 +65,7 @@ const WeatherApp = () => {
       });
 
       const selectedLocalDate = formatDate(
-        selectedDate.getTime() + timezoneOffSet * 1000,
+        selectedDate.getTime() + timezoneOffSet,
         "yyyy-MM-dd"
       );
       const filteredData = processedData.filter(

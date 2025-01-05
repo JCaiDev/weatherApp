@@ -1,4 +1,4 @@
-import { format, isValid, addDays } from "date-fns";
+import { format, isValid } from "date-fns";
 
 export const formatDate = (date, dateFormat = "MMM dd, HH:mm") => {
   const parsedDate = new Date(date);
