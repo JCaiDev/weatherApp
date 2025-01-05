@@ -14,7 +14,6 @@ const WeatherApp = () => {
   const [showForecast, setShowForecast] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [timezoneOffSet, setTimezoneOffSet] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
 
   const baseDate = new Date();
