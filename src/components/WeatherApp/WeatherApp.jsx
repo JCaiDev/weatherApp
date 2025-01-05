@@ -14,6 +14,7 @@ const WeatherApp = () => {
   const [showForecast, setShowForecast] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [timezoneOffSet, setTimezoneOffSet] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
 
   const baseDate = new Date();
@@ -123,7 +124,7 @@ const WeatherApp = () => {
             {Array(6)
               .fill(null)
               .map((_, index) => {
-                const msInDays = 86400000; // ms in a day
+                const msInDays = 86400000; // ms in a
                 const buttonDate = new Date(
                   baseDate.getTime() + index * msInDays
                 );
