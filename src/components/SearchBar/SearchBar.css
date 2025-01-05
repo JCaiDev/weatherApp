@@ -28,7 +28,7 @@
 .search--button {
   height: 27px;
   width: 80px;
-  margin-left: 10px;
+  margin-left: 5px;
   border-radius: 5px;
   border: 1px solid var(--background-light);
   font-size: 16px;
@@ -75,7 +75,7 @@ form {
   border: 1px solid var(--button-border);
   background-color: var(--background-light);
   position: absolute;
-  top: 100%;
+  top: 38%;
   left: 0;
   width: 100%;
   z-index: 10;
