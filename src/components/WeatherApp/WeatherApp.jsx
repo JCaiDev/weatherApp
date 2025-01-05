@@ -126,7 +126,7 @@ const WeatherApp = () => {
               .map((_, index) => {
                 const msInDays = 86400000; // ms in a
                 const buttonDate = new Date(
-                  baseDate.getTime() + index * msInDays
+                  baseDate.getTime() + index * msInDays + timezoneOffSet * 1000
                 );
 
                 const formattedDate = getformattedDate(buttonDate);
